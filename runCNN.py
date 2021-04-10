@@ -1,6 +1,6 @@
 import tensorflow as tf
 from tensorflow.keras import datasets
-from CNN import CNN
+from CNN import CNNClassifier
 import matplotlib.pyplot as plt
 
 (train_images, train_labels), (test_images, test_labels) = datasets.cifar10.load_data()
@@ -22,19 +22,21 @@ output_layer_size = 10
 output_activation = 'softmax'
 validation_data = (test_images, test_labels)
 
-cnn = CNN(input_shape, filters, kernel_size, conv_activation=conv_activation, pool_size=pool_size,
-          dense_layer_size=dense_layer_size, dense_activation=dense_activation,
-          output_layer_size=output_layer_size, output_activation=output_activation)
-history = cnn.fit(optimizer='adam', loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
-                  metrics=['accuracy'], trainX=train_images, trainY=train_labels,
-                  epochs=10, validation_data=validation_data)
+cnn = CNNClassifier(input_shape, filters, kernel_size, conv_activation=conv_activation, pool_size=pool_size,
+                    dense_layer_size=dense_layer_size, dense_activation=dense_activation,
+                    output_layer_size=output_layer_size, output_activation=output_activation)
+cnn.summary()
+# history = cnn.fit(optimizer='adam', loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
+#                   metrics=['accuracy'], trainX=train_images, trainY=train_labels,
+#                   epochs=10, validation_data=validation_data)
 
-plt.plot(history.history['accuracy'], label='accuracy')
-plt.plot(history.history['val_accuracy'], label='val_accuracy')
-plt.xlabel('Epoch')
-plt.ylabel('Accuracy')
-plt.ylim([0.5, 1])
-plt.legend(loc='lower right')
+# plt.plot(history.history['accuracy'], label='accuracy')
+# plt.plot(history.history['val_accuracy'], label='val_accuracy')
+# plt.xlabel('Epoch')
+# plt.ylabel('Accuracy')
+# plt.ylim([0.5, 1])
+# plt.legend(loc='lower right')
+# plt.show()
 
-test_loss, test_acc = cnn.evaluate(test_images, test_labels)
-print(test_acc)
+# test_loss, test_acc = cnn.evaluate(test_images, test_labels)
+# print(test_acc)

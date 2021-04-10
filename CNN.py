@@ -10,7 +10,7 @@ import tensorflow as tf
 from tensorflow.keras import datasets, layers, models
 
 
-class CNN:
+class CNNClassifier:
     def __init__(self, input_shape, filters, kernel_size, strides=None, conv_activation=None, pool_size=None,
                  dense_layer_size=None, dense_activation=None, output_layer_size=None, output_activation=None):
         self.input_shape = input_shape
@@ -49,7 +49,19 @@ class CNN:
         self.model.compile(optimizer=optimizer, loss=loss, metrics=metrics)
         self.history = self.model.fit(trainX, trainY, epochs=epochs, validation_data=validation_data)
         return self.history
-
+    
+    def fit_generator(self, optimizer, loss, metrics, train_generator, epochs, validation_generator):
+        self.model.compile(optimizer=optimizer, loss=loss, metrics=metrics)
+        self.history = self.model.fit(train_generator, epochs=epochs, validation_data=validation_generator)
+        return self.history
+    
     def evaluate(self, testX, testY):
         return self.model.evaluate(testX,  testY, verbose=2)
+    
+    def evaluate_generator(self, test_generator):
+        return self.model.evaluate(test_generator, verbose=2)
+    
+    def summary(self):
+        print('printing summary of the model')
+        self.model.summary()
 
