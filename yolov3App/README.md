@@ -1,3 +1,6 @@
+Most part of this code is from https://github.com/lmeulen/PeopleCounter. This code has been modified to create an application to detect crowd and social distancing.
+
+
 Count people in video (webcam or file) with YOLO
 
 Download pre-trained YOLO v3 model from Darknet (https://pjreddie.com/darknet/yolo/) 
