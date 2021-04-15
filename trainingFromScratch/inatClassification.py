@@ -50,10 +50,12 @@ cnn = CNNClassifier(input_shape, filters, kernel_size, conv_activation=conv_acti
                     output_layer_size=output_layer_size, output_activation=output_activation,
                             batch_normalization=batch_norm, dropout=dropout)
 
-cnn.guidedbackprop(batchX[0])
-# history = cnn.fit_generator(optimizer='adam', loss=tf.keras.losses.CategoricalCrossentropy(from_logits=True),
-#                             metrics=['accuracy'], train_generator=train_iterator,
-#                             epochs=EPOCHS, validation_generator=val_iterator)
 
-# test_loss, test_acc = cnn.evaluate_generator(test_iterator)
-# print(test_acc)
+history = cnn.fit_generator(optimizer='adam', loss=tf.keras.losses.CategoricalCrossentropy(from_logits=True),
+                             metrics=['accuracy'], train_generator=train_iterator,
+                             epochs=EPOCHS, validation_generator=val_iterator)
+
+cnn.guidedbackprop(batchX[0])
+
+test_loss, test_acc = cnn.evaluate_generator(test_iterator)
+print(test_acc)
