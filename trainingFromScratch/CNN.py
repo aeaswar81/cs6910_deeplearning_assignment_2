@@ -82,7 +82,7 @@ class CNNClassifier:
         self.history = self.model.fit(trainX, trainY, epochs=epochs, validation_data=validation_data)
         return self.history
     
-    def fit_generator(self, optimizer, loss, metrics, train_generator, epochs, validation_generator, callbacks):
+    def fit_generator(self, optimizer, loss, metrics, train_generator, epochs, validation_generator, callbacks=None):
         self.model.compile(optimizer=optimizer, loss=loss, metrics=metrics)
         self.history = self.model.fit(train_generator, epochs=epochs, validation_data=validation_generator, callbacks=callbacks)
         return self.history
