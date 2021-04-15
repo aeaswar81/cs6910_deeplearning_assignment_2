@@ -16,7 +16,7 @@ data_augment_args = dict(rotation_range=90,
                          zoom_range=0.2)
 target_size = (256, 256)
 
-datagen = ImageDataGenerator(validation_split=0.1, **data_augment_args)
+datagen = ImageDataGenerator(rescale=1. / 255, validation_split=0.1, **data_augment_args)
 
 train_iterator = datagen.flow_from_directory('inaturalist_12K/train/',
                                              subset="training", target_size=target_size,
@@ -25,7 +25,7 @@ val_iterator = datagen.flow_from_directory('inaturalist_12K/train/',
                                            subset="validation", target_size=target_size,
                                            interpolation='lanczos:center')
 
-datagen = ImageDataGenerator()
+datagen = ImageDataGenerator(rescale=1. / 255)
 test_iterator = datagen.flow_from_directory('inaturalist_12K/val/', target_size=target_size,
                                             interpolation='lanczos:center')
 

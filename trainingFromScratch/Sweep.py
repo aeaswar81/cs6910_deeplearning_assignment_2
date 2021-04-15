@@ -27,8 +27,8 @@ def sweep():
            + ('image=%d' % config.image_size) + "_" \
            + ('dropout=%.2f' % config.dropout if config.dropout is not None else '') + "_" \
            + ('epochs=%d' % config.epochs) \
-           + ('_augment' if config.filter_organization == 'yes' else '') \
-           + ('_batchnorm' if config.filter_organization == 'yes' else '')
+           + ('_augment' if config.data_augmentation == 'yes' else '') \
+           + ('_batchnorm' if config.batch_normalization == 'yes' else '')
 
     wandb.run.name = name
     data_augment_args = dict(rotation_range=90,
@@ -37,7 +37,7 @@ def sweep():
                              zoom_range=0.2)
     target_size = (config.image_size,) * 2
 
-    datagen = ImageDataGenerator(validation_split=0.1, **data_augment_args) if config.data_augmentation == 'yes' \
+    datagen = ImageDataGenerator(rescale=1. / 255, validation_split=0.1, **data_augment_args) if config.data_augmentation == 'yes' \
         else ImageDataGenerator(validation_split=0.1)
 
     train_iterator = datagen.flow_from_directory('/content/drive/MyDrive/inaturalist_12K/train/', batch_size=config.batch_size,
@@ -47,7 +47,7 @@ def sweep():
                                                subset="validation", target_size=target_size,
                                                interpolation='lanczos:center')
 
-    datagen = ImageDataGenerator()
+    datagen = ImageDataGenerator(rescale=1. / 255)
     test_iterator = datagen.flow_from_directory('/content/drive/MyDrive/inaturalist_12K/val/', batch_size=config.batch_size,
                                                 target_size=target_size,
                                                 interpolation='lanczos:center')
